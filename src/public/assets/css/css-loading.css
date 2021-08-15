@@ -1,0 +1,14 @@
+
+.loading-wrapper {
+    display: flex;
+    justify-content: center;
+    background-color: #fbfbfb;
+    padding: 50px;
+    align-items: center;
+    height: 100vh;
+}
+
+.loading-wrapper img {
+    width: 100px;
+    height: 100px;
+}

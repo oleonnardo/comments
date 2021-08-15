@@ -1,0 +1,23 @@
+{
+    "name": "leonardo/comments",
+    "description": "Módulo de comentários para seu site",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Leonardo\\Comments\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Leonardo",
+            "email": "leonardo.araujornb@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {}
+}
