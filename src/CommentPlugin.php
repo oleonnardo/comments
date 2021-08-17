@@ -45,7 +45,7 @@ class CommentPlugin extends Builder {
      * @return string
      */
     public static function renderSpinning() {
-        $cssFile = file_get_contents($cssFile);
+        $cssFile = file_get_contents((new static())->cssLoading);
 
         echo "
         <style type='text/css'>{$cssFile}</style>

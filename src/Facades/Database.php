@@ -4,16 +4,13 @@ namespace Leonardo\Comments\Facades;
 
 use \PDO;
 
-class Database {
+class Database extends DatabaseStruct {
 
-    /** @var \PDO */
-    private $connection;
-
+    /**
+     * Database constructor.
+     */
     public function __construct() {
-        $filename = __DIR__ . "/comments.db";
-
-        $this->connection = new PDO("sqlite:{$filename}");
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connectionOrCreate();
     }
 
 
@@ -44,6 +41,47 @@ class Database {
         return $stmt->execute($this->replaceKeys($values));
     }
 
+
+    /**
+     * @param $values
+     * @return bool
+     */
+    public function createUser($values) {
+
+        $_SESSION['comments_db'] = [
+            'nome' => $values['nome'],
+            'email' => $values['email']
+        ];
+
+        if ($this->hasUser($values['email']) > 0) {
+            return;
+        }
+
+        // inicia o PDO
+        $pdo = $this->connection;
+
+        // recupera as colunas
+        $colunas = $this->getColunas($values);
+
+        // cria o sql para o insert
+        $query = "INSERT INTO users (" . $colunas . ") VALUES (".$this->getValues(array_keys($values)).")";
+
+        // prepara o SQL
+        $stmt = $pdo->prepare($query);
+        return $stmt->execute($this->replaceKeys($values));
+    }
+
+
+    /**
+     * @return int
+     */
+    private function hasUser() {
+        // cria o sql
+        $sql = "SELECT * FROM users WHERE email = '{$_SESSION['comments_db']['email']}'";
+
+        // executa o sql
+        return $this->connection->prepare($sql)->rowCount();
+    }
 
     /**
      * @param     $url

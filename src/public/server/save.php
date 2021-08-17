@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
 $database = new \Leonardo\Comments\Facades\Database();
@@ -15,6 +17,15 @@ $database->createComment([
     'nome'          => filter_var($_POST['nome'], FILTER_SANITIZE_STRING),
     'email'         => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
     'conteudo'      => $_POST['comentario'],
+    'created_at'    => date('Y-m-d H:i:s'),
+    'updated_at'    => null,
+    'deleted_at'    => null
+]);
+
+$database->createUser([
+    'nome'          => filter_var($_POST['nome'], FILTER_SANITIZE_STRING),
+    'email'         => filter_var($_POST['email'], FILTER_SANITIZE_EMAIL),
+    'ip'            => \Leonardo\Comments\Http\Request::ip(),
     'created_at'    => date('Y-m-d H:i:s'),
     'updated_at'    => null,
     'deleted_at'    => null
