@@ -23,6 +23,9 @@ class CommentPlugin extends Builder {
     /** @var string */
     private $rootPath = null;
 
+    /** @var string */
+    private $vendorPath = '/../../../../autoload.php';
+
     /**
      * CommentPlugin constructor.
      * @param null $url
@@ -38,6 +41,17 @@ class CommentPlugin extends Builder {
      */
     public static function init($url) {
         return new CommentPlugin($url);
+    }
+
+
+    /**
+     * @param string $path
+     * @return $this
+     */
+    public function vendor($path) {
+        $this->vendorPath = $path;
+
+        return $this;
     }
 
 
@@ -65,9 +79,10 @@ class CommentPlugin extends Builder {
         $url = $this->getUrl();
 
         // pega a URL completa da page
-        $parametro = Request::fullUrl();
+        $parametro  = base64_encode(Request::fullUrl());
+        $vendor     = base64_encode($this->vendorPath);
 
-        return $this->html("<iframe src='{$url}?url={$parametro}' frameborder='0' width='100%' height='400'></iframe>");
+        return $this->html("<iframe src='{$url}?url={$parametro}&vendor={$vendor}' frameborder='0' width='100%' height='400'></iframe>");
     }
 
 

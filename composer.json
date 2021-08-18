@@ -1,7 +1,7 @@
 {
     "name": "leonardo/comments",
     "description": "Módulo de comentários para seu site",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
